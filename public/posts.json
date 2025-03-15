@@ -1,0 +1,40 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "Мой первый пост",
+      "content": "Привет, это мой первый пост в блоге!",
+      "date": "2024-01-01"
+    },
+    {
+      "id": 1742058144950,
+      "title": "as",
+      "content": "sa",
+      "date": "2025-03-15"
+    },
+    {
+      "id": 1742058164165,
+      "title": "nur",
+      "content": "nurs",
+      "date": "2025-03-15"
+    },
+    {
+      "id": 1742058294680,
+      "title": "sa",
+      "content": "dsa",
+      "date": "2025-03-15"
+    },
+    {
+      "id": 1742058473563,
+      "title": "Nurislam",
+      "content": "Hi i'm from kyrguzstan i love you frontend developer",
+      "date": "2025-03-15"
+    },
+    {
+      "id": 1742058596548,
+      "title": "Nur",
+      "content": "i'm frontend developer",
+      "date": "2025-03-15"
+    }
+  ]
+}
