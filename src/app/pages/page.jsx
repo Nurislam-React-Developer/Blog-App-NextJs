@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link'; // Добавьте импорт Link
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { TetrisLoader } from '../loader/page';
 
@@ -25,49 +25,76 @@ export function Home() {
 	}, []);
 
 	if (isLoading) return <TetrisLoader />;
-	if (!data || !data.posts) return <p>Нет данных</p>;
+	if (!data || !data.posts || data.posts.length === 0) {
+		return (
+			<div className='max-w-6xl mx-auto p-6 pt-20'>
+				<div className='text-center'>
+					<h1 className='text-4xl font-bold text-gray-800 mb-6'>Блог пуст</h1>
+					<p className='text-gray-500 mb-8'>
+						Начните с создания первого поста!
+					</p>
+					<Link href='/create-post'>
+						<button className='px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-200'>
+							Создать пост
+						</button>
+					</Link>
+				</div>
+			</div>
+		);
+	}
 
 	return (
-		<div className='max-w-6xl mx-auto p-6'>
-			<div className='flex justify-between items-center mb-8'>
-				<h1 className='text-4xl font-bold text-gray-800'>Блог</h1>
-				<Link href='/pages/create-post'>
-					<button className='px-5 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg shadow-md hover:shadow-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 transform hover:-translate-y-1 cursor-pointer'>
+		<div className='max-w-7xl mx-auto p-6 pt-10'>
+			<div className='flex items-center justify-between mb-12'>
+				<h1 className='text-4xl font-extrabold text-gray-900'>Блог</h1>
+				<Link href='/create-post'>
+					<button className='px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-medium rounded-lg shadow-md hover:bg-emerald-700 transition duration-200'>
 						Создать пост
 					</button>
 				</Link>
 			</div>
 
-			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+			<div className='flex flex-col gap-20'>
 				{data.posts.map((post) => (
-					<div
+					<Link
 						key={post.id}
-						className='bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1'
+						href={`/post/${post.id}`}
+						className='block overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition duration-300'
 					>
-						<Link href={`/post/${post.id}`} className='block h-full'>
-							<div className='p-5'>
-								<h2 className='text-xl font-bold text-gray-800 mb-3 line-clamp-2'>
-									{post.title}
-								</h2>
-								<p className='text-gray-600 mb-4 line-clamp-3'>
-									{post.content}
+						<div className='p-6 bg-white'>
+							<h2 className='text-2xl font-semibold text-gray-800 mb-4'>
+								{post.title}
+							</h2>
+							<div className='mb-6'>
+								<p className='text-gray-600 mb-4'>
+									<strong>Содержание:</strong> {post.content}
 								</p>
-								<div className='flex justify-end'>
-									<span className='text-sm text-gray-500'>{post.date}</span>
-								</div>
+								<p className='text-gray-500 mb-4'>
+									<strong>Дата:</strong>{' '}
+									{new Date(post.date).toLocaleDateString()}
+								</p>
 							</div>
-						</Link>
-					</div>
+							<div className='flex items-center justify-between'>
+								<span className='text-sm text-gray-500'>Пост №{post.id}</span>
+								<svg
+									className='w-6 h-6 text-gray-400 transform transition duration-200 hover:text-gray-600'
+									fill='none'
+									stroke='currentColor'
+									viewBox='0 0 24 24'
+									xmlns='http://www.w3.org/2000/svg'
+								>
+									<path
+										strokeLinecap='round'
+										strokeLinejoin='round'
+										strokeWidth={2}
+										d='M17 8l4 4m0 0l-4 4m4-4H3'
+									/>
+								</svg>
+							</div>
+						</div>
+					</Link>
 				))}
 			</div>
-
-			{data.posts.length === 0 && (
-				<div className='text-center py-10'>
-					<p className='text-xl text-gray-500'>
-						Нет постов. Создайте первый пост!
-					</p>
-				</div>
-			)}
 		</div>
 	);
 }
